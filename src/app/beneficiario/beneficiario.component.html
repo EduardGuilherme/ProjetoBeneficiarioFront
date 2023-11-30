@@ -1,0 +1,34 @@
+<!-- beneficiario.component.html -->
+<div>
+    <h2>Novo Beneficiário</h2>
+    <form>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" [(ngModel)]="beneficiario.nome" name="nome" required>
+  
+      <label for="telefone">Telefone:</label>
+      <input type="text" id="telefone" [(ngModel)]="beneficiario.telefone" name="telefone" required>
+  
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input type="text" id="dataNascimento" [value]="beneficiario.dataNascimento" (input)="beneficiario.dataNascimento = ($event.target as HTMLInputElement).value" name="dataNascimento" required>
+  
+      <button *ngIf="!editMode" (click)="criarBeneficiario()">Criar Beneficiário</button>
+      <button *ngIf="editMode" (click)="atualizarBeneficiario(beneficiario.beneficiarioId)">Atualizar Beneficiário</button>
+    </form>
+  </div>
+  
+  <div>
+    <h2>Lista de Beneficiários</h2>
+    <ul>
+      <li *ngFor="let b of beneficiarios">
+        {{ b.nome }} - {{ b.telefone }}
+        <button (click)="deletarBeneficiario(b.beneficiarioId)">Excluir</button>
+        <button (click)="carregarBeneficiario(b.beneficiarioId)">Editar</button>
+        <ul *ngIf="b.documentos && b.documentos.length > 0">
+          <li *ngFor="let documento of b.documentos">
+            {{ documento.tipoDocumento }} - {{ documento.descricao }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
